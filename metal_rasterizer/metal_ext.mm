@@ -7,7 +7,8 @@ The code that registers a PyTorch custom operation.
 
 
 #include <torch/extension.h>
-#include "CustomSoftshrink.h"
+#include "rasterize_points.h"
+#include "metal_ext.h"
 
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
@@ -98,5 +99,7 @@ torch::Tensor mps_softshrink(const torch::Tensor &input, float lambda = 0.5) {
 
 // Create Python bindings for the Objective-C++ code.
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-    m.def("mps_softshrink", &mps_softshrink);
+  m.def("rasterize_gaussians_metal", &RasterizeGaussiansMetal);
+  m.def("rasterize_gaussians_backward_metal", &RasterizeGaussiansBackwardMetal);
+  //m.def("mark_visible_metal", &markVisibleMetal);
 }

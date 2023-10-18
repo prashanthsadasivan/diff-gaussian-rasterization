@@ -31,7 +31,8 @@ if torch.cuda.is_available() == True:
 
 if torch.backends.mps.is_available() and torch.backends.mps.is_built():
     ext_modules.append(CppExtension(
-        name="diff_gaussian_rasterization._C",
+        name="metal_rasterizer",
+        include_dirs=torch.utils.cpp_extension.include_paths(),
         sources=[
             "metal_rasterizer/metal_ext.mm"
             #"metal_rasterizer/rasterize_points.cpp", #todo move to metal

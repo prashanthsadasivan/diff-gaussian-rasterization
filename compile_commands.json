@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/prashanthsadasivan/3dgaussians/diff-gaussian-rasterization",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/prashanthsadasivan/3dgaussians/diff-gaussian-rasterization/metal_rasterizer -std=c++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/MetalRasterizer.dir/metal_rasterizer/rasterizer_impl.cpp.o -c /Users/prashanthsadasivan/3dgaussians/diff-gaussian-rasterization/metal_rasterizer/rasterizer_impl.cpp",
+  "file": "/Users/prashanthsadasivan/3dgaussians/diff-gaussian-rasterization/metal_rasterizer/rasterizer_impl.cpp",
+  "output": "CMakeFiles/MetalRasterizer.dir/metal_rasterizer/rasterizer_impl.cpp.o"
+}
+]
