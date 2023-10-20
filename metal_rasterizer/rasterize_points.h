@@ -65,3 +65,7 @@ torch::Tensor markVisibleMetal(
 		torch::Tensor& means3D,
 		torch::Tensor& viewmatrix,
 		torch::Tensor& projmatrix);
+
+
+// C++ op dispatching the Metal soft shrink shader.
+torch::Tensor mps_softshrink(const torch::Tensor &input, float lambda);

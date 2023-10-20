@@ -34,8 +34,8 @@ if torch.backends.mps.is_available() and torch.backends.mps.is_built():
         name="metal_rasterizer",
         include_dirs=torch.utils.cpp_extension.include_paths(),
         sources=[
+            "metal_rasterizer/rasterize_points.mm", #todo move to metal
             "metal_rasterizer/metal_ext.mm"
-            #"metal_rasterizer/rasterize_points.cpp", #todo move to metal
             ]
         , extra_cflags=['-std=c++17']))
 

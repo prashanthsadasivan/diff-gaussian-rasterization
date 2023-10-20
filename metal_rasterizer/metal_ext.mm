@@ -6,6 +6,7 @@ The code that registers a PyTorch custom operation.
 */
 
 
+#include <torch/python.h>
 #include <torch/extension.h>
 #include "rasterize_points.h"
 #include "metal_ext.h"
