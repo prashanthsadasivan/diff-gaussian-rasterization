@@ -1,0 +1,5 @@
+regenerate compile_commands with:
+```
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DUSE_METAL=ON
+make
+```
