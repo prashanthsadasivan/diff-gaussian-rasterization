@@ -21,10 +21,16 @@
 #include <fstream>
 #include <string>
 #include <functional>
+#include "metal_ext.h"
 #include "rasterize_points.h"
 
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
+
+// Helper function to retrieve the `MTLBuffer` from a `torch::Tensor`.
+static inline id<MTLBuffer> getMTLBufferStorage(const torch::Tensor& tensor) {
+  return __builtin_bit_cast(id<MTLBuffer>, tensor.storage().data());
+}
 
 
 std::function<char*(size_t N)> resizeFunctional(torch::Tensor& t) {
@@ -35,44 +41,58 @@ std::function<char*(size_t N)> resizeFunctional(torch::Tensor& t) {
     return lambda;
 }
 
+void yo(std::string s) {
+  std::cout << s << std::endl;
+}
+
 torch::Tensor& dispatchSoftShrinkKernel(const torch::Tensor& input, torch::Tensor& output, float lambda) {
+  std::cout << "create system default device" << std::endl;
   id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+  std::cout << "got device" << std::endl;
   NSError *error = nil;
 
   // Set the number of threads equal to the number of elements within the input tensor.
   int numThreads = input.numel();
 
   // Load the custom soft shrink shader.
-  id<MTLLibrary> customKernelLibrary = [device newLibraryWithSource:[NSString stringWithUTF8String:kernelString]
+  std::cout << "new library with source" << std::endl;
+  id<MTLLibrary> customKernelLibrary = [device newLibraryWithSource:[NSString stringWithUTF8String:CUSTOM_KERNEL]
                                                             options:nil
                                                               error:&error];
+  std::cout << "new library with source success" << std::endl;
   TORCH_CHECK(customKernelLibrary, "Failed to to create custom kernel library, error: ", error.localizedDescription.UTF8String);
 
   std::string kernel_name = std::string("softshrink_kernel_") + (input.scalar_type() == torch::kFloat ? "float" : "half");
   id<MTLFunction> customSoftShrinkFunction = [customKernelLibrary newFunctionWithName:[NSString stringWithUTF8String:kernel_name.c_str()]];
   TORCH_CHECK(customSoftShrinkFunction, "Failed to create function state object for ", kernel_name.c_str());
-
+  yo("created function state object");
   // Create a compute pipeline state object for the soft shrink kernel.
   id<MTLComputePipelineState> softShrinkPSO = [device newComputePipelineStateWithFunction:customSoftShrinkFunction error:&error];
   TORCH_CHECK(softShrinkPSO, error.localizedDescription.UTF8String);
+  yo("created pipeline state function");
 
   // Get a reference to the command buffer for the MPS stream.
   id<MTLCommandBuffer> commandBuffer = torch::mps::get_command_buffer();
   TORCH_CHECK(commandBuffer, "Failed to retrieve command buffer reference");
+  yo("created command buffer");
+
 
   // Get a reference to the dispatch queue for the MPS stream, which encodes the synchronization with the CPU.
   dispatch_queue_t serialQueue = torch::mps::get_dispatch_queue();
+  yo("got dispatch queue");
 
   dispatch_sync(serialQueue, ^(){
       // Start a compute pass.
       id<MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
       TORCH_CHECK(computeEncoder, "Failed to create compute command encoder");
+      yo("created compute command encoder");
 
       // Encode the pipeline state object and its parameters.
       [computeEncoder setComputePipelineState:softShrinkPSO];
       [computeEncoder setBuffer:getMTLBufferStorage(input) offset:input.storage_offset() * input.element_size() atIndex:0];
       [computeEncoder setBuffer:getMTLBufferStorage(output) offset:output.storage_offset() * output.element_size() atIndex:1];
       [computeEncoder setBytes:&lambda length:sizeof(float) atIndex:2];
+      yo("encode the pipeline state object");
 
       MTLSize gridSize = MTLSizeMake(numThreads, 1, 1);
 
@@ -82,18 +102,21 @@ torch::Tensor& dispatchSoftShrinkKernel(const torch::Tensor& input, torch::Tenso
           threadGroupSize = numThreads;
       }
       MTLSize threadgroupSize = MTLSizeMake(threadGroupSize, 1, 1);
+      yo("mtl size made");
 
       // Encode the compute command.
       [computeEncoder dispatchThreads:gridSize
                 threadsPerThreadgroup:threadgroupSize];
+      yo("compute command encoded");
 
       [computeEncoder endEncoding];
+      yo("enconding ended");
 
       // Commit the work.
       torch::mps::commit();
+      yo("work committed");
   });
-
-
+  return output;
 }
 
 
@@ -214,8 +237,8 @@ torch::Tensor mps_softshrink(const torch::Tensor &input, float lambda = 0.5) {
 
     // Allocate the output, same shape as the input.
     torch::Tensor output = torch::empty_like(input);
-
     return dispatchSoftShrinkKernel(input, output, lambda);
+    //return output;
 }
 
 torch::Tensor markVisibleMetal(
