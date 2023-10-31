@@ -1,0 +1,171 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		646A03342AF1325B00328E8D /* auxiliary.metal in Sources */ = {isa = PBXBuildFile; fileRef = 646A03332AF1325B00328E8D /* auxiliary.metal */; };
+		64DE49212AE471D800CC0D61 /* diff_gaussian_renderer_metal.metal in Sources */ = {isa = PBXBuildFile; fileRef = 64DE49202AE471D800CC0D61 /* diff_gaussian_renderer_metal.metal */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		646A03332AF1325B00328E8D /* auxiliary.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = auxiliary.metal; sourceTree = "<group>"; };
+		64DE491D2AE471D800CC0D61 /* diff_gaussian_renderer_metal.metallib */ = {isa = PBXFileReference; explicitFileType = "archive.metal-library"; includeInIndex = 0; path = diff_gaussian_renderer_metal.metallib; sourceTree = BUILT_PRODUCTS_DIR; };
+		64DE49202AE471D800CC0D61 /* diff_gaussian_renderer_metal.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = diff_gaussian_renderer_metal.metal; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		64DE49162AE471D800CC0D61 = {
+			isa = PBXGroup;
+			children = (
+				646A03332AF1325B00328E8D /* auxiliary.metal */,
+				64DE491F2AE471D800CC0D61 /* diff_gaussian_renderer_metal */,
+				64DE491E2AE471D800CC0D61 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		64DE491E2AE471D800CC0D61 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				64DE491D2AE471D800CC0D61 /* diff_gaussian_renderer_metal.metallib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		64DE491F2AE471D800CC0D61 /* diff_gaussian_renderer_metal */ = {
+			isa = PBXGroup;
+			children = (
+				64DE49202AE471D800CC0D61 /* diff_gaussian_renderer_metal.metal */,
+			);
+			path = diff_gaussian_renderer_metal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		64DE491C2AE471D800CC0D61 /* diff_gaussian_renderer_metal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64DE49242AE471D800CC0D61 /* Build configuration list for PBXNativeTarget "diff_gaussian_renderer_metal" */;
+			buildPhases = (
+				64DE491B2AE471D800CC0D61 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = diff_gaussian_renderer_metal;
+			productName = diff_gaussian_renderer_metal;
+			productReference = 64DE491D2AE471D800CC0D61 /* diff_gaussian_renderer_metal.metallib */;
+			productType = "com.apple.product-type.metal-library";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		64DE49172AE471D800CC0D61 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					64DE491C2AE471D800CC0D61 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 64DE491A2AE471D800CC0D61 /* Build configuration list for PBXProject "diff_gaussian_renderer_metal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 64DE49162AE471D800CC0D61;
+			productRefGroup = 64DE491E2AE471D800CC0D61 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				64DE491C2AE471D800CC0D61 /* diff_gaussian_renderer_metal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		64DE491B2AE471D800CC0D61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646A03342AF1325B00328E8D /* auxiliary.metal in Sources */,
+				64DE49212AE471D800CC0D61 /* diff_gaussian_renderer_metal.metal in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		64DE49222AE471D800CC0D61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		64DE49232AE471D800CC0D61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		64DE49252AE471D800CC0D61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		64DE49262AE471D800CC0D61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		64DE491A2AE471D800CC0D61 /* Build configuration list for PBXProject "diff_gaussian_renderer_metal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64DE49222AE471D800CC0D61 /* Debug */,
+				64DE49232AE471D800CC0D61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64DE49242AE471D800CC0D61 /* Build configuration list for PBXNativeTarget "diff_gaussian_renderer_metal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64DE49252AE471D800CC0D61 /* Debug */,
+				64DE49262AE471D800CC0D61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 64DE49172AE471D800CC0D61 /* Project object */;
+}
